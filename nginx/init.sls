@@ -13,4 +13,4 @@ nginx:
     - name: {{ datamap.service.name }}
     - enable: {{ datamap.service.enable|default(True) }}
     - require:
-      - pkg: iscdhcp
+      - pkg: nginx
