@@ -1,0 +1,7 @@
+{% load_yaml as rawmap %}
+Debian:
+  pkgs:
+    - nginx
+  service:
+    name: nginx
+{% endload %}
