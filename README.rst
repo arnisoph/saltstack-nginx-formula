@@ -30,7 +30,7 @@ Available states
     :local:
 
 ``nginx``
-------------
+---------
 Install and start nginx server
 
 Additional resources
@@ -58,7 +58,7 @@ Salt Compatibility
 
 Tested with:
 
-* 2014.1.3
+* 2014.1.4
 
 OS Compatibility
 ================
