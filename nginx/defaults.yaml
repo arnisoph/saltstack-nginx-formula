@@ -1,7 +1,7 @@
 {% load_yaml as rawmap %}
 Debian:
-  pkgs:
-    - nginx
-  service:
-    name: nginx
+  pkgs: {}
+  service: {}
+  vhosts:
+    dir: /etc/nginx/sites-available
 {% endload %}
