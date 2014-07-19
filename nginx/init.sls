@@ -73,7 +73,7 @@ modconfig_{{ k }}:
 #}
 
 {% for k, v in salt['pillar.get']('nginx:vhosts', {}).items() %}
-  {% if v.ensure is not defined or v.ensure in ['managed'] %}
+  {% if v.ensure|default(['managed']) in ['managed'] %}
     {% set f_fun = 'managed' %}
   {% elif v.ensure in ['absent'] %}
     {% set f_fun = 'absent' %}
