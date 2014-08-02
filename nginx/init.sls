@@ -11,7 +11,7 @@ nginx:
     - installed
     - pkgs: {{ datamap.pkgs|default(['nginx']) }}
   service:
-    - {{ datamap.service.state|default('running') }}
+    - {{ datamap.service.ensure|default('running') }}
     - name: {{ datamap.service.name|default('nginx') }}
     - enable: {{ datamap.service.enable|default(True) }}
     - watch:
