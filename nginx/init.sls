@@ -14,12 +14,6 @@ nginx:
     - {{ datamap.service.ensure|default('running') }}
     - name: {{ datamap.service.name|default('nginx') }}
     - enable: {{ datamap.service.enable|default(True) }}
-    - watch:
-      - pkg: nginx #TODO remove
-{% for k, v in salt['pillar.get']('nginx:vhosts', {}).items() %}
-      - file: vhost_{{ k }}
-      - cmd: manage_site_{{ k }}
-{% endfor %}
 
 {% for k, v in salt['pillar.get']('nginx:vhosts', {}).items() %}
   {% if v.ensure|default('managed') in ['managed'] %}
@@ -33,20 +27,26 @@ nginx:
 vhost_{{ k }}:
   file:
     - {{ f_fun }}
-    - name: {{ v.path|default(datamap.vhosts.dir ~ '/' ~ datamap.vhosts.name_prefix|default('') ~ v_name ~ datamap.vhosts.name_suffix|default('')) }}
+    - name: {{ v.path|default(datamap.vhosts.path|default('/etc/nginx/sites-available') ~ '/' ~ datamap.vhosts.name_prefix|default('') ~ v_name ~ datamap.vhosts.name_suffix|default('')) }}
     - user: root
     - group: root
     - mode: 600
     - contents_pillar: nginx:vhosts:{{ v_name }}:plain
+    - watch_in:
+      - service: nginx
 
 manage_site_{{ k }}:
   cmd:
     - run
     {% if f_fun in ['managed'] %}
-    - name: ln -s /etc/nginx/sites-available/{{ v_name }} /etc/nginx/sites-enabled/{{ v_name }}
-    - unless: test -L /etc/nginx/sites-enabled/{{ v.linkname|default(v_name) }}
+    - name: ln -s {{ datamap.vhosts.path|default('/etc/nginx/sites-available') }}/{{ v_name }} {{ datamap.vhosts_enabled.path|default('/etc/nginx/sites-enabled') }}/{{ v_name }}
+    - unless: test -L {{ datamap.vhosts_enabled.path|default('/etc/nginx/sites-enabled') }}/{{ v.linkname|default(v_name) }}
     {% else %}
-    - name: rm /etc/nginx/sites-enabled/{{ v_name }}
-    - onlyif: test -L /etc/nginx/sites-enabled/{{ v.linkname|default(v_name) }}
+    - name: rm {{ datamap.vhosts_enabled.path|default('/etc/nginx/sites-enabled') }}/{{ v_name }}
+    - onlyif: test -L {{ datamap.vhosts_enabled.path|default('/etc/nginx/sites-enabled') }}/{{ v.linkname|default(v_name) }}
     {% endif %}
+    - require:
+      - file: vhost_{{ k }}
+    - watch_in:
+      - service: nginx
 {% endfor %}
