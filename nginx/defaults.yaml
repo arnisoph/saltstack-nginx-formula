@@ -6,7 +6,7 @@ Debian:
     name: www-data
   vhosts: {}
   vhosts_enabled: {}
-Redhat:
+RedHat:
   pkgs: {}
   service: {}
   user:
