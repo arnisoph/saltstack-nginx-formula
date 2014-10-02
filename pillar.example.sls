@@ -1,5 +1,12 @@
 nginx:
   vhosts:
+    vhosttest:
+      ensure: absent
+      plain: |
+        ## just an empty vhost config
+    default:
+      ensure: absent
+      linkname: 000-default
     gitlab:
       plain: |
         upstream gitlab {

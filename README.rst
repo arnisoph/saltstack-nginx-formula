@@ -12,7 +12,7 @@ NOTICE BEFORE YOU USE
 TODO
 ====
 
-* manage nginx.conf (need to set server_names_hash_bucket_size=64)
+* manage nginx.conf (I need to set server_names_hash_bucket_size=64)
 
 Instructions
 ============
