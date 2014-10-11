@@ -2,6 +2,9 @@
 nginx-formula
 =============
 
+.. image:: https://api.flattr.com/button/flattr-badge-large.png
+    :target: https://flattr.com/submit/auto?user_id=bechtoldt&url=https%3A%2F%2Fgithub.com%2Fbechtoldt%2Fnginx-formula
+
 Salt Stack Formula to set up and configure nginx, a HTTP and reverse proxy server
 
 NOTICE BEFORE YOU USE
